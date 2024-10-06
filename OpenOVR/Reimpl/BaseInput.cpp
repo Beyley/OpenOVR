@@ -821,7 +821,9 @@ void BaseInput::LoadBindingsSet(const InteractionProfile& profile, const std::st
 				std::string pathStr;
 				// special case: "position" in OpenVR is a 2D vector, in OpenXR this can be represented by the parent of the input value
 				// See the OpenXR spec section 11.4 ("Suggested Bindings")
-				if (inputName == "position") {
+				// extra special case: in the default bindings for HL:A, the "walk" action is bound with the "click" input and an extra
+				// "force_input" parameter, here we just treat this combination as a normal position input (not sure if this is correct)
+				if (inputName == "position" || srcJson["parameters"]["force_input"].asString() == "position") {
 					pathStr = profile.TranslateAction(importBasePath);
 				} else {
 					pathStr = profile.TranslateAction(importBasePath + "/" + inputName);
@@ -953,7 +955,7 @@ void BaseInput::LoadDpadAction(const InteractionProfile& profile, const std::str
 		return;
 	}
 
-	// check if parent is in dpadBindingParens
+	// check if parent is in dpadBindingParents
 	// get parent name: remove /user/hand and /input/ parts, add end of openxr path (so we don't i.e. confuse dpad bindings from the knuckles joystick with dpad bindings from the oculus joystick)
 	std::string to_delete[] = { "/user/hand/", "/input/" };
 	auto& path = profile.GetPath();
