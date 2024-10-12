@@ -76,7 +76,7 @@ void InteractionProfile::AddLegacyBindings(const LegacyControllerActions& ctrl, 
 	create(ctrl.system, paths->system);
 	create(ctrl.menu, paths->menu);
 	create(ctrl.menuTouch, paths->menuTouch);
-	create(ctrl.btnA, paths->btnA);
+	// create(ctrl.btnA, paths->btnA);
 	create(ctrl.btnATouch, paths->btnATouch);
 	create(ctrl.trackpadX, paths->trackpadX);
 	create(ctrl.trackpadY, paths->trackpadY);
